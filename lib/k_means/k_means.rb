@@ -5,7 +5,8 @@ class KMeans
   attr_reader :centroids, :nodes
   
   def initialize(data, options={})
-    distance_measure = options[:distance_measure] || :euclidean_distance
+    distance_measure = options[:distance_measure]
+    raise ArgumentError.new("Must indicate a :distance_measure") unless distance_measure
     @nodes = Node.create_nodes(data, distance_measure)
     @centroids = options[:centroid_positions] ||
       Centroid.create_centroids(options[:centroids] || 4, @nodes)
